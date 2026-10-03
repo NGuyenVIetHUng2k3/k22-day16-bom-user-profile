@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trang Quảng Cáo</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-100 text-slate-800 min-h-screen flex items-center justify-center p-4">
+
+  <div class="max-w-md w-full bg-white rounded-xl border shadow-md overflow-hidden">
+    
+    <div class="bg-amber-500 text-white p-5 text-center">
+      <h1 class="font-bold text-xl">Chi Tiết Quảng Cáo</h1>
+      <p class="text-amber-100 text-xs mt-0.5">Thông tin tham số từ location.search</p>
+    </div>
+
+    <div class="p-5 space-y-4">
+
+      <!-- Thông báo nếu mở trực tiếp không có params -->
+      <div id="no-params" class="hidden bg-rose-50 border border-rose-200 text-rose-700 p-3 rounded-lg text-sm text-center font-semibold">
+        Không có tham số quảng cáo
+      </div>
+
+      <!-- Hiển thị 2 tham số utm -->
+      <div id="has-params" class="grid grid-cols-2 gap-3">
+        <div class="bg-slate-50 p-3 rounded-lg border">
+          <span class="text-[10px] text-slate-400 font-bold uppercase block">utm_source</span>
+          <span id="res-source" class="font-mono font-bold text-indigo-600 text-sm mt-0.5 block">---</span>
+        </div>
+
+        <div class="bg-slate-50 p-3 rounded-lg border">
+          <span class="text-[10px] text-slate-400 font-bold uppercase block">utm_campaign</span>
+          <span id="res-campaign" class="font-mono font-bold text-indigo-600 text-sm mt-0.5 block">---</span>
+        </div>
+      </div>
+
+      <!-- Nội dung quảng cáo mẫu -->
+      <div class="bg-amber-50/50 p-4 rounded-lg border border-amber-100 space-y-2">
+        <h3 class="font-bold text-slate-900 text-xs uppercase">Nội dung chiến dịch:</h3>
+        <p class="text-xs text-slate-600 leading-relaxed">
+          Ưu đãi đặc quyền cho học viên truy cập qua link tài trợ: Giảm ngay 50% học phí khóa học Web APIs nâng cao!
+        </p>
+        <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=600&q=80" alt="Promo" class="w-full h-32 object-cover rounded border">
+      </div>
+
+      <div class="text-center pt-1">
+        <a href="index.html" class="inline-block bg-slate-900 hover:bg-slate-800 text-white font-medium px-4 py-2 rounded-lg text-xs transition">
+          &larr; Quay lại trang chủ
+        </a>
+      </div>
+
+    </div>
+
+  </div>
+
+  <script>
+    // Đọc URL search params
+    const searchParams = new URLSearchParams(window.location.search);
+    const utmSource = searchParams.get('utm_source');
+    const utmCampaign = searchParams.get('utm_campaign');
+
+    const noParamsBox = document.getElementById('no-params');
+    const hasParamsBox = document.getElementById('has-params');
+
+    if (!utmSource && !utmCampaign) {
+      noParamsBox.classList.remove('hidden');
+      hasParamsBox.classList.add('hidden');
+    } else {
+      document.getElementById('res-source').textContent = utmSource || "N/A";
+      document.getElementById('res-campaign').textContent = utmCampaign || "N/A";
+    }
+  </script>
+</body>
+</html>

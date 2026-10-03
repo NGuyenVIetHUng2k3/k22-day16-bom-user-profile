@@ -1,0 +1,354 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>k22-day16-bom-user-profile</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-slate-100 text-slate-800 min-h-screen flex flex-col">
+    <header class="bg-white border-b sticky top-0 z-10">
+      <div
+        class="max-w-5xl mx-auto px-4 py-3 flex justify-between items-center"
+      >
+        <h1 class="font-bold text-lg text-indigo-600">BOM Dashboard</h1>
+
+        <div
+          id="status-badge"
+          class="flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-gray-100"
+        >
+          <span
+            id="status-dot"
+            class="w-2.5 h-2.5 rounded-full bg-gray-400"
+          ></span>
+          <span id="status-text">Đang kiểm tra...</span>
+        </div>
+      </div>
+    </header>
+
+    <main class="max-w-5xl mx-auto px-4 py-6 flex-1 w-full space-y-6">
+      <!-- VIEW TRANG CHỦ -->
+      <section id="home-view" class="space-y-6">
+        <!-- Banner Quang Cao (Dung the a reload trang) -->
+        <div class="bg-white rounded-xl border p-4 shadow-sm">
+          <span
+            class="text-[10px] font-bold text-amber-600 bg-amber-50 px-2 py-0.5 rounded border border-amber-200"
+            >SPONSORED</span
+          >
+          <a
+            href="campaign.html?utm_source=nguyen_viet_hung&utm_campaign=campage_1"
+            class="block group mt-2"
+          >
+            <div class="relative overflow-hidden rounded-lg">
+              <img
+                src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1000&q=80"
+                alt="Ads Banner"
+                class="w-full h-44 object-cover group-hover:scale-105 transition duration-300"
+              />
+              <div
+                class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent p-4 flex flex-col justify-end text-white"
+              >
+                <h3
+                  class="font-bold text-lg group-hover:text-amber-300 transition"
+                >
+                  Khóa học Lập trình Web K22
+                </h3>
+                <p class="text-xs text-slate-200">
+                  Click để xem chi tiết chương trình ưu đãi (Reload trang)
+                </p>
+              </div>
+            </div>
+          </a>
+        </div>
+
+        <!-- Khối dữ liệu BOM -->
+        <div>
+          <div class="flex justify-between items-center mb-4">
+            <h2 class="font-bold text-slate-900">
+              Thông tin thiết bị & Trình duyệt
+            </h2>
+            <button
+              id="btn-go-fp"
+              class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium px-4 py-2 rounded-lg text-sm transition shadow-sm"
+            >
+              Xem Fingerprinting (SPA) &rarr;
+            </button>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div
+              class="bg-white p-4 rounded-xl border shadow-sm hover:border-indigo-200 transition"
+            >
+              <p class="text-xs text-slate-400 font-semibold uppercase">
+                Vị trí (GPS)
+              </p>
+              <p
+                id="bom-location"
+                class="font-semibold text-slate-800 text-sm mt-1"
+              >
+                Đang định vị...
+              </p>
+            </div>
+
+            <div
+              class="bg-white p-4 rounded-xl border shadow-sm hover:border-indigo-200 transition"
+            >
+              <p class="text-xs text-slate-400 font-semibold uppercase">
+                Trình duyệt
+              </p>
+              <p
+                id="bom-browser"
+                class="font-semibold text-slate-800 text-sm mt-1"
+              >
+                ---
+              </p>
+            </div>
+
+            <div
+              class="bg-white p-4 rounded-xl border shadow-sm hover:border-indigo-200 transition"
+            >
+              <p class="text-xs text-slate-400 font-semibold uppercase">
+                Hệ điều hành
+              </p>
+              <p id="bom-os" class="font-semibold text-slate-800 text-sm mt-1">
+                ---
+              </p>
+            </div>
+
+            <div
+              class="bg-white p-4 rounded-xl border shadow-sm hover:border-indigo-200 transition"
+            >
+              <p class="text-xs text-slate-400 font-semibold uppercase">
+                Ngôn ngữ
+              </p>
+              <p
+                id="bom-lang"
+                class="font-semibold text-slate-800 text-sm mt-1"
+              >
+                ---
+              </p>
+            </div>
+
+            <div
+              class="bg-white p-4 rounded-xl border shadow-sm hover:border-indigo-200 transition"
+            >
+              <p class="text-xs text-slate-400 font-semibold uppercase">
+                Màn hình
+              </p>
+              <p
+                id="bom-screen"
+                class="font-semibold text-slate-800 text-sm mt-1"
+              >
+                ---
+              </p>
+            </div>
+
+            <div
+              class="bg-white p-4 rounded-xl border shadow-sm hover:border-indigo-200 transition"
+            >
+              <p class="text-xs text-slate-400 font-semibold uppercase">
+                Hướng màn hình
+              </p>
+              <p
+                id="bom-orient"
+                class="font-semibold text-slate-800 text-sm mt-1"
+              >
+                ---
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW FINGERPRINTING (SPA) -->
+      <section id="fingerprint-view" class="hidden">
+        <div class="bg-white p-6 rounded-xl border shadow-sm space-y-5">
+          <div class="flex justify-between items-center border-b pb-4">
+            <div>
+              <h2 class="font-bold text-xl text-slate-900">
+                Trang Fingerprinting
+              </h2>
+              <p class="text-xs text-slate-500 mt-0.5">
+                Điều hướng SPA qua `history.pushState`
+              </p>
+            </div>
+            <button
+              id="btn-back-home"
+              class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1.5 rounded-lg text-sm font-medium transition"
+            >
+              &larr; Quay về trang chủ
+            </button>
+          </div>
+
+          <div class="bg-slate-900 text-slate-100 p-4 rounded-lg">
+            <p class="text-xs text-slate-400 mb-1">
+              Fingerprint String (tạo nối từ history.state):
+            </p>
+            <p
+              id="fp-output"
+              class="font-mono text-amber-400 font-bold break-all text-sm md:text-base"
+            >
+              Đang tạo mã...
+            </p>
+          </div>
+
+          <div class="bg-indigo-50/60 p-4 rounded-lg border border-indigo-100">
+            <h4 class="font-bold text-indigo-900 text-xs uppercase mb-2">
+              Thông tin khôi phục từ history.state:
+            </h4>
+            <ul
+              id="fp-details"
+              class="text-sm text-slate-700 space-y-1 font-mono"
+            ></ul>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="bg-white border-t py-3 text-center text-xs text-slate-400">
+      k22-day16-bom-user-profile
+    </footer>
+
+    <script>
+      // 1. Thu thập dữ liệu BOM từ trình duyệt
+      function getBOMData() {
+        const ua = navigator.userAgent;
+
+        let browser = "Khác";
+        if (ua.includes("Chrome") && !ua.includes("Edg"))
+          browser = "Google Chrome";
+        else if (ua.includes("Edg")) browser = "Microsoft Edge";
+        else if (ua.includes("Firefox")) browser = "Mozilla Firefox";
+        else if (ua.includes("Safari") && !ua.includes("Chrome"))
+          browser = "Apple Safari";
+
+        let os = "Khác";
+        if (ua.includes("Win")) os = "Windows";
+        else if (ua.includes("Mac")) os = "macOS";
+        else if (ua.includes("Linux")) os = "Linux";
+        else if (ua.includes("Android")) os = "Android";
+        else if (ua.includes("iPhone") || ua.includes("iPad")) os = "iOS";
+
+        return {
+          browser,
+          os,
+          languages: navigator.languages
+            ? navigator.languages.join(", ")
+            : navigator.language,
+          screenSize: `${screen.width}x${screen.height} (${window.innerWidth}x${window.innerHeight})`,
+          orientation:
+            window.innerWidth > window.innerHeight ? "Landscape" : "Portrait",
+          location: "Đang cập nhật...",
+        };
+      }
+
+      let bomState = getBOMData();
+
+      // Render thông tin lên UI & lấy vị trí GPS
+      function initHomePage() {
+        document.getElementById("bom-browser").textContent = bomState.browser;
+        document.getElementById("bom-os").textContent = bomState.os;
+        document.getElementById("bom-lang").textContent = bomState.languages;
+        document.getElementById("bom-screen").textContent = bomState.screenSize;
+        document.getElementById("bom-orient").textContent =
+          bomState.orientation;
+
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(
+            (pos) => {
+              const loc = `${pos.coords.latitude.toFixed(4)}, ${pos.coords.longitude.toFixed(4)}`;
+              document.getElementById("bom-location").textContent = loc;
+              bomState.location = loc;
+            },
+            () => {
+              document.getElementById("bom-location").textContent =
+                "Bị từ chối vị trí";
+              bomState.location = "Permission_Denied";
+            },
+          );
+        }
+      }
+
+      // 2. Cập nhật trạng thái mạng Online / Offline
+      function updateOnlineStatus() {
+        const dot = document.getElementById("status-dot");
+        const text = document.getElementById("status-text");
+        const badge = document.getElementById("status-badge");
+
+        if (navigator.onLine) {
+          dot.className =
+            "w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse";
+          text.textContent = "Online";
+          badge.className =
+            "flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200";
+        } else {
+          dot.className = "w-2.5 h-2.5 rounded-full bg-rose-500";
+          text.textContent = "Offline";
+          badge.className =
+            "flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-rose-50 text-rose-700 border border-rose-200";
+        }
+      }
+
+      window.addEventListener("online", updateOnlineStatus);
+      window.addEventListener("offline", updateOnlineStatus);
+
+      // 3. Xử lý điều hướng SPA (pushState & popstate)
+      const homeView = document.getElementById("home-view");
+      const fpView = document.getElementById("fingerprint-view");
+
+      function renderViewByState(state) {
+        if (state && state.page === "fingerprint") {
+          homeView.classList.add("hidden");
+          fpView.classList.remove("hidden");
+
+          const data = state.bomData || bomState;
+
+          // Nối chuỗi tạo fingerprint duy nhất
+          const rawStr = `${data.browser}|${data.os}|${data.languages}|${data.screenSize}|${data.orientation}|${data.location}`;
+          document.getElementById("fp-output").textContent =
+            "FP_" + btoa(rawStr).replace(/=/g, "");
+
+          document.getElementById("fp-details").innerHTML = `
+          <li>• Browser: <b>${data.browser}</b></li>
+          <li>• OS: <b>${data.os}</b></li>
+          <li>• Languages: <b>${data.languages}</b></li>
+          <li>• Screen: <b>${data.screenSize}</b></li>
+          <li>• Orientation: <b>${data.orientation}</b></li>
+          <li>• Location: <b>${data.location}</b></li>
+        `;
+        } else {
+          fpView.classList.add("hidden");
+          homeView.classList.remove("hidden");
+        }
+      }
+
+      document.getElementById("btn-go-fp").addEventListener("click", () => {
+        const payload = { page: "fingerprint", bomData: bomState };
+        history.pushState(payload, "", "?page=fingerprint");
+        renderViewByState(payload);
+      });
+
+      document.getElementById("btn-back-home").addEventListener("click", () => {
+        history.pushState({ page: "home" }, "", window.location.pathname);
+        renderViewByState({ page: "home" });
+      });
+
+      // Lắng nghe nút Back/Forward của trình duyệt
+      window.addEventListener("popstate", (e) => {
+        renderViewByState(e.state);
+      });
+
+      // Chạy khi khởi tạo trang
+      initHomePage();
+      updateOnlineStatus();
+
+      // Giữ view khi F5 trực tiếp ở link ?page=fingerprint
+      if (
+        new URLSearchParams(window.location.search).get("page") ===
+        "fingerprint"
+      ) {
+        renderViewByState({ page: "fingerprint", bomData: bomState });
+      }
+    </script>
+  </body>
+</html>
